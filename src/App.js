@@ -1,45 +1,31 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import './App.css';
 import Header  from "./components/Header";
 import TodoList from "./components/TodoList";
 import AddTodo from "./components/AddTodo";
 import TodosCount from "./components/TodosCount";
 
-const APIRoot = 'http://localhost:3333/todos';
+const APIRoot = 'http://localhost:9999/todos';
 
 
-class App extends React.Component {
-	constructor(props){
-		super(props)
+export default ()=> {
+	const appName = 'Simple Todo App';
+	const [todos, setTodos] = useState([]);
 
-		this.appName = 'Simple Todo App ';
-
-		this.state = {
-			"todos": [],
-		}
-
-		this.addTodo = this.addTodo.bind(this);
-	}
-
-	componentDidMount(){
-		console.log(`componentDidMount - the place to fetch initial data`);
-		this.fetchTodos();
-	}
-
-	fetchTodos(){
+	useEffect(()=>{
 		// Use fetch API to set initial state,
 		fetch(APIRoot)
 			.then(response => response.json())
 			.then(data => {
-				this.setState({ todos: data })
+				setTodos(data);
 			}
 		)
 		.catch( err=>console.error(`Ups, ${err}`) );
-	}
+	}, []); // we must pass empty array to tel React to use our effect only once (on mount and unmount).
 
-	addTodo = (todoTitle)=>{
-		const todos = this.state.todos;
 
+	const addTodo = (todoTitle)=>{
+		console.log(`todos in addTodo`, todos);
 		// create the new todo object
 		const newTodo = {
 			"title": todoTitle,
@@ -63,12 +49,12 @@ class App extends React.Component {
 		})
 		.then(data => {
 			// change local state
-			this.setState({"todos": [...todos,data]})
+			setTodos([...todos,data])
 		})
 		.catch( err=>console.error(`Ups, error: ${err}`) );
 	}
 
-	removeTodo = (todoId)=>{
+	const removeTodo = (todoId)=>{
 		//// change server state:
 		fetch(`${APIRoot}/${todoId}`,{
 			method: 'DELETE'
@@ -78,14 +64,13 @@ class App extends React.Component {
 				throw Error(response.statusText);
 			}
 			// change local state:
-			const todos = this.state.todos.filter(todo=> todo.id !== todoId)
-			// this.setState({"todos":todos});
-			this.setState({todos}); // from ES6
+			const filteredTodos = todos.filter(todo=> todo.id !== todoId)
+			setTodos(filteredTodos)
 		})
 		.catch( err=>console.error(`Ups, ${err}`) );
 	}
 
-	toggleComplete = (todoId, todoCompleted)=>{
+	const toggleComplete = (todoId, todoCompleted)=>{
 		//// change server state:
 		fetch(`${APIRoot}/${todoId}`,{
 			method: 'PATCH',
@@ -101,30 +86,25 @@ class App extends React.Component {
 				throw Error(response.statusText);
 			}
 			// change local state:
-			const todos = this.state.todos.map(
+			const todosCompleted = todos.map(
 				todo=>todo.id===todoId ? {...todo,completed:!todo.completed} : {...todo}
 			);
-			this.setState({todos:todos});
+			setTodos(todosCompleted);
 		})
 		.catch( err=>console.error(`Ups, ${err}`) );
 	}
 
-	render(){
-		return (
-			// JSX syntax
-			<div className="page">
-				<Header appName={this.appName}/>
-				<main className="todo-add">
-					<AddTodo addTodo={this.addTodo}/>
-					<TodoList
-						todos={this.state.todos}
-						removeTodo={this.removeTodo}
-						toggleComplete={this.toggleComplete}/>
-					<TodosCount count={this.state.todos.length}/>
-				</main>
-			</div>
-		)
-	}
+	return (
+		<div className="page">
+			<Header appName={appName}/>
+			<main className="todo-add">
+				<AddTodo addTodo={addTodo}/>
+				<TodoList
+					todos={todos}
+					removeTodo={removeTodo}
+					toggleComplete={toggleComplete}/>
+				<TodosCount count={todos.length}/>
+			</main>
+		</div>
+	)
 }
-
-export default App;
