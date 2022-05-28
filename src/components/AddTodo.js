@@ -1,41 +1,38 @@
-import React from 'react';
+import React, {useState,createRef} from 'react';
+import { useTodos } from "../todosContext";
 
-class AddTodo extends React.Component {
-	constructor(props){
-		super(props)
+const AddTodo = ()=> {
+	const [todoTitle, setTodoTitle] = useState('')
+	const {addTodo} = useTodos()
+	const inputRef = createRef()
 
-		this.state = {
-			"todoTitle":""
-		}
-	}
-
-	handleChange = (e)=>{
+	const handleChange = (e)=>{
 		console.log(e.target.value);
-		this.setState({
-			"todoTitle": e.target.value
-		})
-
-
+		setTodoTitle(e.target.value)
 	}
 
-	handleClick = (e)=>{
-		this.props.addTodo(this.state.todoTitle);
+	const handleClick = (e)=>{
+		addTodo(todoTitle)
+		// clear and focus the input
+		setTodoTitle('')
+		inputRef.current.focus()
 	}
 
-	render(){
-		return (
-			<div className="todo-add">
-				<input
-					name="todoTitle"
-					type="text"
-					autoFocus
-					placeholder="add new todo ..."
-					value={this.state.todoTitle}
-					onChange={this.handleChange}/>
-				<button className="todo-add-btn" onClick={this.handleClick}>Add</button>
-			</div>
-		 )
-	}
+	return (
+		<div className="todo-add">
+			<input
+				ref = {inputRef}
+				name="todoTitle"
+				type="text"
+				autoFocus
+				placeholder="add new todo ..."
+				value={todoTitle}
+				onChange={handleChange}/>
+			<button
+				className="todo-add-btn"
+				onClick={handleClick}>Add</button>
+		</div>
+	)
 }
 
 export default AddTodo;

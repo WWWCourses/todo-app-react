@@ -1,15 +1,16 @@
 import React from 'react';
+import { useTodos } from "../todosContext";
 
-const TodoItem = ( {todo, removeTodo,toggleComplete} ) => {
+const TodoItem = ({todo}) => {
+	const {removeTodo,toggleComplete} = useTodos()
+
 	const handleRemove = (e)=>{
-		console.log(`delete click`);
 		removeTodo(todo.id)
 	}
 
 	const handleToggleComplete = (e)=>{
 		toggleComplete(todo.id, todo.completed);
 	}
-
 
 	return (
 		<li>
