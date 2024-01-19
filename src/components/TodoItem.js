@@ -1,8 +1,8 @@
 import React from 'react';
-import { useTodos } from "../todosContext";
+import { useTodosContext } from "../todosContext";
 
 const TodoItem = ({todo}) => {
-	const {removeTodo,toggleComplete} = useTodos()
+	const {removeTodo,toggleComplete} = useTodosContext()
 
 	const handleRemove = (e)=>{
 		removeTodo(todo.id)

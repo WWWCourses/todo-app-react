@@ -4,7 +4,7 @@ const TodosContext = createContext();
 
 
 function TodosContextProvider({ children }) {
-	const APIRoot = 'http://localhost:3333/todos';
+	const APIRoot = 'http://localhost:3000/todos';
 
 	// Initialize state
 	const [todos, setTodos] = useState([]);
@@ -100,7 +100,7 @@ function TodosContextProvider({ children }) {
 	);
 }
 
-function useTodos() {
+function useTodosContext() {
 	const context = useContext(TodosContext);
 	if (context === undefined) {
 	  throw new Error("Context must be used within a Provider");
@@ -108,4 +108,4 @@ function useTodos() {
 	return context;
 }
 
-export {TodosContextProvider, useTodos}
+export {TodosContextProvider, useTodosContext}

@@ -1,10 +1,10 @@
 import React from 'react';
-import { useTodos } from "../todosContext";
+import { useTodosContext } from "../todosContext";
 import TodoItem from "./TodoItem";
 
 
 const TodoList = (props) => {
-	const {todos} = useTodos()
+	const {todos} = useTodosContext()
 
 	return (
 		<ul className="todo-list-items">

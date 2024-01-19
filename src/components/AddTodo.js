@@ -1,9 +1,9 @@
 import React, {useState,createRef} from 'react';
-import { useTodos } from "../todosContext";
+import { useTodosContext } from "../todosContext";
 
 const AddTodo = ()=> {
 	const [todoTitle, setTodoTitle] = useState('')
-	const {addTodo} = useTodos()
+	const {addTodo} = useTodosContext()
 	const inputRef = createRef()
 
 	const handleChange = (e)=>{
