@@ -29,27 +29,27 @@ const postTodo = async (todo)=>{
             throw new Error(`HTTP Error: ${response.statu}`)
         }
 
-        const todo = await response.json();
-        console.dir(todo);
-        return todo;
+        // TODO-DONE: тази декларация (const todo) заради "hoisting"-a се изпълнява в началото и "засенчва" todo параметъра.  Затова хвърляше грешка ("ReferenceError: Cannot access 'todo' before initialization") на 25 ред.
+        // const todo = await response.json();
+        return await response.json();
     } catch (err) {
         console.error(err);
     }
 }
 
 // TESTING...
-const getTodos = async ()=>{
+const gettodo_tmps = async ()=>{
     const todos = await fetchTodos();
     console.dir(todos);
 }
 
 
-const addTodo = async (newTodo)=>{
+const addTodo = async ()=>{
     const newTodo = {
         "title":"New Todo",
         "completed": false,
     };
-    const todo = postTodo(newTodo);
+    const todo = await postTodo(newTodo);
     console.dir(todo);
 }
 
