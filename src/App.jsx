@@ -9,27 +9,18 @@ import {fetchTodos,postTodo} from "./api/todos";
 function App() {
   const [todos, setTodos] = useState([])
 
-  const getTodosApi = async ()=>{
+  const getTodos = async ()=>{
     const todos = await fetchTodos();
     setTodos(todos)
   }
 
-  const addTodoApi = async (newTodo)=>{
-    const newTodo = {
-        "title":"New Todo",
-        "completed": false,
-    };
-    const todo = await postTodo(newTodo);
-    console.dir(todo);
-    return todo;
-  }
-
-
-  const addTodo = (title) =>{
+  const addTodo = async (title) =>{
     const newTodo = {
       title : title,
       completed: false
     }
+
+    const todo = await postTodo(newTodo);
 
     // todos = [...todos, newTodo] DO NOT DO THIS
     setTodos([...todos, newTodo])

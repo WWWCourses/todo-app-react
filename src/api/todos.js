@@ -53,6 +53,6 @@ const addTodo = async ()=>{
     console.dir(todo);
 }
 
-addTodo()
+// addTodo()
 
 export {fetchTodos, postTodo}
