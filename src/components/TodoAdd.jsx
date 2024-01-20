@@ -1,11 +1,33 @@
 import React, {useState} from 'react';
 
-const TodoAdd = (props) => {
+const TodoAdd = ({addTodo}) => {
+    const [value, setValue] = useState('')
+
+    const onChangeHandler = (e)=>{
+        setValue(e.target.value)
+    }
+
+    const onClickHandler = (e)=>{
+        addTodo(value)
+    }
+
     return (
         <React.Fragment>
             <div className="todo-add">
-				<input type="text" autofocus placeholder="add new todo ...">
-				<button className="todo-add-btn" type="button">Add</button>
+				<input
+                    value={value}
+                    type="text"
+                    autoFocus
+                    placeholder="add new todo ..."
+                    onChange={onChangeHandler}
+                />
+				<button
+                    className="todo-add-btn"
+                    type="button"
+                    onClick={onClickHandler}
+                >
+                Add
+                </button>
 			</div>
         </React.Fragment>
     );
