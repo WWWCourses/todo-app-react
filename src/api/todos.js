@@ -17,8 +17,6 @@ const fetchTodos =  async ()=>{
 
 const postTodo = async (todo)=>{
     try {
-        // TODO: why tod is not initialized
-        console.dir(todo);
         const response = await fetch(`${API_ROOT}/todos`,{
             method:"POST",
             headers:{
@@ -45,12 +43,16 @@ const getTodos = async ()=>{
     console.dir(todos);
 }
 
-const newTodo = {
-    "title":"New Todo",
-    "completed": false,
-};
+
 const addTodo = async (newTodo)=>{
+    const newTodo = {
+        "title":"New Todo",
+        "completed": false,
+    };
     const todo = postTodo(newTodo);
+    console.dir(todo);
 }
+
+addTodo()
 
 export {fetchTodos, postTodo}
