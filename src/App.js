@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header  from "./components/Header";
 import TodoList from "./components/TodoList";
@@ -9,16 +10,22 @@ import { TodosContextProvider } from "./todosContext";
 const App = ()=> {
 	const appName = 'Simple Todo App';
 	return (
-		<div className="page">
-			<Header appName={appName}/>
-			<main className="todo-add">
+		<Router>
+			<div className="page">
+				<Header appName={appName}/>
+				<main className="todo-add">
 				<TodosContextProvider>
-					<AddTodo/>
-					<TodoList/>
-					{/* <TodosCount/> */}
-				</TodosContextProvider>
-			</main>
-		</div>
+					<Routes>
+						<Route path="/" element={<>
+								<AddTodo />
+								<TodoList />
+						</>} />
+						<Route path="/edit/:id" element={<EditTodo />} />
+					</Routes>
+					</TodosContextProvider>
+				</main>
+			</div>
+		</Router>
 	)
 }
 

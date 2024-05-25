@@ -78,7 +78,7 @@ header{
 	cursor: pointer;
 }
 
-.todo-remove,.editTodo, .todo-togle-complete{
+.todo-remove,.todo-edit, .todo-togle-complete{
 	float: right;
 	width: 2em;
 	height: 100%;
@@ -87,24 +87,24 @@ header{
 	/* color: #FF7E7E; */
 	color: aquamarine;
 }
-.todo-remove:hover, .editTodo:hover, .todo-togle-complete:hover{
+.todo-remove:hover, .todo-edit:hover, .todo-togle-complete:hover{
 	cursor: pointer;
 }
 
 /* stretch icon to containing div */
-.todo-remove i, .editTodo i,.todo-togle-complete i{
+.todo-remove i, .todo-edit i,.todo-togle-complete i{
 	display: block;
 	width: 100%;
 	height: 100%;
 	opacity: .7;
 }
-.todo-remove i::before, .editTodo i::before,.todo-togle-complete i::before{
+.todo-remove i::before, .todo-edit i::before,.todo-togle-complete i::before{
 	vertical-align: middle;
 	line-height: 3em;
 	opacity: .7;
 }
 
-.todo-remove:hover i::before, .editTodo:hover i::before, .todo-togle-complete:hover i::before{
+.todo-remove:hover i::before, .todo-edit:hover i::before, .todo-togle-complete:hover i::before{
 	opacity: 1;
 }
 
